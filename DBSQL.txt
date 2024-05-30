@@ -1,0 +1,171 @@
+CREATE DATABASE dbmno;
+USE dbmno;
+
+-- Crear la tabla Departamentos
+CREATE TABLE Departamentos (
+    departamento_id INT PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(100) NOT NULL,
+    descripcion TEXT
+);
+
+CREATE TABLE Empleados (
+    empleado_id INT PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(100) NOT NULL,
+    apellido VARCHAR(100) NOT NULL,
+    fecha_nacimiento DATE,
+    direccion VARCHAR(255),
+    telefono VARCHAR(20),
+    email VARCHAR(100),
+    fecha_contratacion DATE,
+    puesto VARCHAR(100),
+    salario DECIMAL(10, 2),
+    departamento_id INT,
+    FOREIGN KEY (departamento_id) REFERENCES Departamentos(departamento_id)
+);
+
+
+CREATE TABLE Productos (
+    producto_id INT PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(100) NOT NULL,
+    descripcion TEXT,
+    precio DECIMAL(10, 2) NOT NULL,
+    stock INT NOT NULL
+);
+
+CREATE TABLE Ventas (
+    venta_id INT PRIMARY KEY AUTO_INCREMENT,
+    empleado_id INT,
+    fecha_venta DATE NOT NULL,
+    total DECIMAL(10, 2) NOT NULL,
+    FOREIGN KEY (empleado_id) REFERENCES Empleados(empleado_id)
+);
+
+CREATE TABLE DetalleVentas (
+    detalle_id INT PRIMARY KEY AUTO_INCREMENT,
+    venta_id INT,
+    producto_id INT,
+    cantidad INT NOT NULL,
+    precio_unitario DECIMAL(10, 2) NOT NULL,
+    FOREIGN KEY (venta_id) REFERENCES Ventas(venta_id),
+    FOREIGN KEY (producto_id) REFERENCES Productos(producto_id)
+);
+
+INSERT INTO Departamentos (nombre, descripcion) VALUES 
+('Ventas', 'Responsable de la comercialización y venta de productos y servicios.'),
+('Recursos Humanos', 'Gestión de personal, contratación, formación y bienestar de los empleados.'),
+('Tecnología de la Información', 'Mantenimiento y desarrollo de sistemas y tecnologías de la información.'),
+('Finanzas', 'Gestión financiera, contabilidad y control presupuestario.'),
+('Marketing', 'Desarrollo de estrategias de marketing y promoción de productos.'),
+('Logística', 'Gestión de la cadena de suministro y distribución de productos.'),
+('Servicio al Cliente', 'Atención y soporte a los clientes, manejo de quejas y consultas.'),
+('Investigación y Desarrollo', 'Innovación y desarrollo de nuevos productos y mejoras técnicas.');
+
+INSERT INTO Empleados (nombre, apellido, fecha_nacimiento, direccion, telefono, email, fecha_contratacion, puesto, salario, departamento_id) VALUES 
+('Juan', 'Perez', '1985-01-15', 'Calle Falsa 123', '555-1234', 'juan.perez@empresa.com', '2021-03-15', 'Vendedor', 3000.00, 1),
+('María', 'Gómez', '1990-03-25', 'Avenida Siempre Viva 456', '555-5678', 'maria.gomez@empresa.com', '2020-04-20', 'Gerente de RRHH', 4500.00, 2),
+('Carlos', 'Ramírez', '1982-07-12', 'Boulevard del Sol 789', '555-9101', 'carlos.ramirez@empresa.com', '2019-06-10', 'Analista de TI', 4000.00, 3),
+('Ana', 'López', '1988-11-02', 'Calle Luna 321', '555-1122', 'ana.lopez@empresa.com', '2018-08-05', 'Contadora', 3500.00, 4),
+('Luis', 'Martínez', '1979-09-09', 'Avenida del Mar 654', '555-3344', 'luis.martinez@empresa.com', '2017-09-25', 'Gerente de Marketing', 5000.00, 5),
+('Laura', 'Hernández', '1992-05-15', 'Calle del Río 987', '555-5566', 'laura.hernandez@empresa.com', '2022-01-30', 'Coordinadora de Logística', 3200.00, 6),
+('Pedro', 'García', '1987-04-22', 'Avenida Central 101', '555-7788', 'pedro.garcia@empresa.com', '2021-11-15', 'Representante de Servicio al Cliente', 2800.00, 7),
+('Sofía', 'Mendoza', '1995-12-18', 'Calle Norte 202', '555-9900', 'sofia.mendoza@empresa.com', '2020-02-28', 'Investigadora', 4200.00, 8),
+('Miguel', 'Torres', '1984-03-30', 'Avenida del Sur 303', '555-2233', 'miguel.torres@empresa.com', '2019-07-20', 'Supervisor de Ventas', 3500.00, 1),
+('Isabel', 'Díaz', '1989-06-11', 'Calle del Este 404', '555-4455', 'isabel.diaz@empresa.com', '2021-10-01', 'Asistente de RRHH', 2700.00, 2),
+('Javier', 'Vargas', '1978-08-21', 'Avenida del Oeste 505', '555-6677', 'javier.vargas@empresa.com', '2018-12-10', 'Desarrollador de Software', 4500.00, 3),
+('Patricia', 'Cruz', '1983-10-05', 'Calle Primavera 606', '555-8899', 'patricia.cruz@empresa.com', '2017-04-18', 'Analista Financiero', 3800.00, 4),
+('Andrés', 'Flores', '1991-01-29', 'Boulevard Invierno 707', '555-0011', 'andres.flores@empresa.com', '2020-07-22', 'Especialista en Marketing Digital', 3400.00, 5),
+('Marta', 'Reyes', '1993-03-17', 'Avenida Verano 808', '555-2234', 'marta.reyes@empresa.com', '2022-05-05', 'Analista de Logística', 3000.00, 6),
+('Fernando', 'Ruiz', '1986-09-15', 'Calle Otoño 909', '555-5567', 'fernando.ruiz@empresa.com', '2019-11-12', 'Especialista en Atención al Cliente', 2900.00, 7),
+('Lucía', 'Pérez', '1994-12-02', 'Avenida Primavera 1010', '555-8890', 'lucia.perez@empresa.com', '2021-03-30', 'Investigadora Junior', 3100.00, 8),
+('Raúl', 'González', '1981-07-19', 'Calle Invierno 111', '555-1123', 'raul.gonzalez@empresa.com', '2018-10-16', 'Gerente de Ventas', 4600.00, 1),
+('Elena', 'Jiménez', '1990-11-27', 'Boulevard del Sur 222', '555-4456', 'elena.jimenez@empresa.com', '2017-08-24', 'Reclutadora', 3300.00, 2),
+('Tomás', 'Rojas', '1985-04-03', 'Calle Central 333', '555-6678', 'tomas.rojas@empresa.com', '2016-06-19', 'Administrador de Sistemas', 3700.00, 3),
+('Gloria', 'Santos', '1992-10-09', 'Avenida del Este 444', '555-8891', 'gloria.santos@empresa.com', '2022-02-14', 'Auxiliar Contable', 2800.00, 4);
+
+INSERT INTO Productos (producto_id, nombre, descripcion, precio, stock) VALUES
+(1, 'Smartphone Galaxy S22 Ultra', 'Teléfono inteligente de última generación con cámara de alta resolución y pantalla AMOLED.', 1200.00, 50),
+(2, 'Laptop Asus ROG Zephyrus G15', 'Computadora portátil diseñada para juegos con procesador Ryzen 9 y tarjeta gráfica NVIDIA RTX 3080.', 2200.00, 30),
+(3, 'Monitor LG UltraGear 27GN950-B', 'Monitor gaming de 27 pulgadas con resolución 4K, HDR y frecuencia de actualización de 144Hz.', 800.00, 40),
+(4, 'Tablet iPad Air (2023)', 'Tableta ligera con pantalla Liquid Retina, chip A15 Bionic y soporte para Apple Pencil.', 900.00, 25),
+(5, 'Impresora HP LaserJet Pro M404dn', 'Impresora láser de alta velocidad y calidad profesional para oficinas.', 400.00, 20),
+(6, 'Cámara Sony Alpha A7 IV', 'Cámara sin espejo con sensor de 33 MP, grabación de video 4K y estabilización de imagen.', 1800.00, 15),
+(7, 'Auriculares Bose QuietComfort 45', 'Auriculares inalámbricos con cancelación de ruido adaptable y hasta 24 horas de autonomía.', 350.00, 50),
+(8, 'Teclado mecánico Logitech G Pro X', 'Teclado gaming con interruptores GX Blue, iluminación RGB y perfil compacto.', 150.00, 60),
+(9, 'Mouse Razer DeathAdder V2', 'Mouse ergonómico con sensor óptico de 20 000 DPI y switches mecánicos.', 70.00, 75),
+(10, 'Tarjeta gráfica NVIDIA GeForce RTX 3080', 'Tarjeta gráfica de alto rendimiento para juegos y aplicaciones intensivas en gráficos.', 1200.00, 30),
+(11, 'Disco duro externo Samsung T7 SSD 2TB', 'Almacenamiento externo portátil con tecnología SSD y velocidades de transferencia ultrarrápidas.', 300.00, 40),
+(12, 'Router ASUS RT-AX86U', 'Router WiFi 6 de doble banda con velocidad de hasta 5700 Mbps y amplia cobertura.', 250.00, 35),
+(13, 'Altavoces Bluetooth JBL Charge 5', 'Altavoces portátiles resistentes al agua con sonido potente y batería de larga duración.', 180.00, 50),
+(14, 'Monitor BenQ EW3270U', 'Monitor 4K HDR de 32 pulgadas con tecnología Eye-Care y conectividad USB-C.', 600.00, 20),
+(15, 'Webcam Logitech StreamCam', 'Cámara web Full HD con enfoque automático y estabilización de imagen para transmisiones en vivo.', 120.00, 30),
+(16, 'Micrófono Blue Yeti X', 'Micrófono USB con calidad de estudio, múltiples patrones de captura y control de mezcla en tiempo real.', 200.00, 25),
+(17, 'Procesador AMD Ryzen 9 5900X', 'Procesador de alta gama con 12 núcleos y 24 hilos, ideal para computadoras de alto rendimiento.', 600.00, 15),
+(18, 'Memoria RAM Corsair Vengeance RGB Pro 32GB', 'Módulo de memoria DDR4 de alta velocidad con iluminación RGB personalizable.', 180.00, 30),
+(19, 'Disco SSD Samsung 970 EVO Plus 1TB', 'Disco SSD NVMe con velocidades de lectura/escritura de hasta 3500/3300 MB/s.', 250.00, 25),
+(20, 'Tarjeta de sonido externa Focusrite Scarlett 2i2', 'Interfaz de audio USB con preamplificadores de micrófono de alta calidad y conectividad MIDI.', 150.00, 20);
+
+INSERT INTO Ventas (empleado_id, fecha_venta, total) VALUES 
+(1, '2023-01-05', 2400.00),
+(2, '2023-01-06', 1600.00),
+(3, '2023-01-07', 3200.00),
+(4, '2023-01-08', 1200.00),
+(5, '2023-01-09', 5000.00),
+(6, '2023-01-10', 6400.00),
+(7, '2023-01-11', 1500.00),
+(8, '2023-01-12', 7000.00),
+(9, '2023-01-13', 3500.00),
+(10, '2023-01-14', 2000.00),
+(11, '2023-01-15', 4200.00),
+(12, '2023-01-16', 2800.00),
+(13, '2023-01-17', 3400.00),
+(14, '2023-01-18', 3000.00),
+(15, '2023-01-19', 2900.00),
+(16, '2023-01-20', 3100.00),
+(17, '2023-01-21', 4600.00),
+(18, '2023-01-22', 3300.00),
+(19, '2023-01-23', 3700.00),
+(20, '2023-01-24', 4800.00);
+
+INSERT INTO DetalleVentas (venta_id, producto_id, cantidad, precio_unitario) VALUES 
+(1, 1, 2, 1200.00),
+(1, 2, 2, 800.00),
+(2, 3, 1, 1000.00),
+(2, 4, 2, 500.00),
+(3, 5, 2, 150.00),
+(3, 6, 3, 40.00),
+(4, 7, 4, 300.00),
+(4, 8, 2, 200.00),
+(5, 9, 2, 80.00),
+(5, 10, 1, 600.00),
+(6, 11, 3, 90.00),
+(6, 12, 1, 400.00),
+(7, 13, 5, 100.00),
+(7, 14, 1, 700.00),
+(8, 15, 4, 150.00),
+(8, 16, 3, 200.00),
+(9, 17, 2, 350.00),
+(9, 18, 1, 600.00),
+(10, 19, 2, 550.00),
+(10, 20, 1, 1200.00),
+(11, 1, 1, 1200.00),
+(11, 3, 2, 1000.00),
+(12, 4, 3, 500.00),
+(12, 5, 4, 150.00),
+(13, 6, 5, 40.00),
+(13, 7, 2, 300.00),
+(14, 8, 2, 200.00),
+(14, 9, 3, 80.00),
+(15, 10, 1, 600.00),
+(15, 11, 2, 90.00),
+(16, 12, 1, 400.00),
+(16, 13, 3, 100.00),
+(17, 14, 1, 700.00),
+(17, 15, 2, 150.00),
+(18, 16, 3, 200.00),
+(18, 17, 1, 350.00),
+(19, 18, 2, 600.00),
+(19, 19, 3, 550.00),
+(20, 20, 1, 1200.00);
+
+
+
